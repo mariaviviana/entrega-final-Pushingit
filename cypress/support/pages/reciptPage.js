@@ -1,4 +1,4 @@
-export class RecipPage {
+export class ReciptPage {
   constructor() {
     this.buttonThankYou = "//button[text()='Thank you']";
     this.selectorNames = "#name";
@@ -6,10 +6,15 @@ export class RecipPage {
     this.product2 = "//p[@id='Black Jacket']";
     this.cardNumber = "#creditCard";
     this.totalPrice = "#totalPrice";
+    this.showLoading = "div[role='progressbar']";
   }
 
   verifyButtonThankYou() {
     return cy.xpath(this.buttonThankYou, { timeout: 10000 });
+  }
+
+  verifyShowLoading() {
+    return cy.get(this.showLoading);
   }
 
   verifyNames(nombre, apellido) {

@@ -5,7 +5,7 @@ import { HomePage } from "../support/pages/homePage";
 import { ProductsPage } from "../support/pages/productsPage";
 import { ShoppingCartPage } from "../support/pages/shoppingCartPage";
 import { CheckOutPage } from "../support/pages/checkOutPage";
-import { RecipPage } from "../support/pages/recipPage";
+import { ReciptPage } from "../support/pages/reciptPage";
 
 describe("Desafio final PushingIt", () => {
   const username = constants.loginData.user;
@@ -16,7 +16,7 @@ describe("Desafio final PushingIt", () => {
   const productsPage = new ProductsPage();
   const shoppingCartPage = new ShoppingCartPage();
   const checkOutPage = new CheckOutPage();
-  const recipPage = new RecipPage();
+  const reciptPage = new ReciptPage();
 
   before("Asociando archivos Json", () => {
     cy.fixture("productsData").then((data) => {
@@ -91,14 +91,15 @@ describe("Desafio final PushingIt", () => {
     checkOutPage.inputLastName(dataCard.lastName);
     checkOutPage.inputCard(dataCard.cardNumber);
     checkOutPage.buttonPurchase();
-
-    //recipPage -> espera dinamica
-    recipPage.verifyButtonThankYou().should("have.text", "Thank you");
-    recipPage.verifyNames(dataCard.name, dataCard.lastName);
-    recipPage.verifyProduct1().should("have.text", productData.product2.name);
-    recipPage.verifyProduct2().should("have.text", productData.product4.name);
-    recipPage.VerifyCardNumber().should("have.text", dataCard.cardNumber);
-    recipPage.verifyTotalAmount(sum);
+    
+    //reciptPage -> espera dinamica
+    reciptPage.verifyShowLoading().should("exist");
+    reciptPage.verifyButtonThankYou().should("have.text", "Thank you");
+    reciptPage.verifyNames(dataCard.name, dataCard.lastName);
+    reciptPage.verifyProduct1().should("have.text", productData.product2.name);
+    reciptPage.verifyProduct2().should("have.text", productData.product4.name);
+    reciptPage.VerifyCardNumber().should("have.text", dataCard.cardNumber);
+    reciptPage.verifyTotalAmount(sum);
   });
 
   after("Eliminacion de usuario", () => {
