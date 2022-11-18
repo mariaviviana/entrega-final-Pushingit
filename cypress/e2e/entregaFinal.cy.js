@@ -25,7 +25,7 @@ describe("Desafio final PushingIt", () => {
         dataCard = data;
       });
     });
-    //Register por peticion POST
+
     cy.request({
       url: "https://pushing-it-backend.herokuapp.com/api/register",
       method: "POST",
@@ -40,7 +40,7 @@ describe("Desafio final PushingIt", () => {
     }).then((response) => {
       expect(response.status).equal(200);
     });
-    //Login por localStore
+
     cy.request({
       method: "POST",
       url: "https://pushing-it-backend.herokuapp.com/api/login",
@@ -59,45 +59,32 @@ describe("Desafio final PushingIt", () => {
   it("Deberia verificar productos del carrito de compras, la suma total y tarjeta de credito", () => {
     const sum = productData.product2.price + productData.product4.price;
 
-    //homePage
     homePage.comeProductsPage();
 
-    //productsPage
     productsPage.chooseProducto(productData.product2.name);
     productsPage.addProductToCart();
     productsPage.chooseProducto(productData.product4.name);
     productsPage.addProductToCart();
     productsPage.goToCard();
 
-    //shoppingCartPage
-    shoppingCartPage
-      .verifyProduct(productData.product2.name)
-      .should("have.text", productData.product2.name);
-    shoppingCartPage
-      .verifyPrice(productData.product2.name, productData.product2.price)
-      .should("have.text", `$${productData.product2.price}`);
-    shoppingCartPage
-      .verifyProduct(productData.product4.name)
-      .should("have.text", productData.product4.name);
-    shoppingCartPage
-      .verifyPrice(productData.product4.name, productData.product4.price)
-      .should("have.text", `$${productData.product4.price}`);
+    reciptPage.verifyProduct(productData.product2.name).should("have.text", productData.product2.name);
+    shoppingCartPage.verifyPrice(productData.product2.name, productData.product2.price).should("have.text", `$${productData.product2.price}`);
+    reciptPage.verifyProduct(productData.product4.name).should("have.text", productData.product4.name);
+    shoppingCartPage.verifyPrice(productData.product4.name, productData.product4.price).should("have.text", `$${productData.product4.price}`);
     shoppingCartPage.buttonTotalAmount();
     shoppingCartPage.verifyTotalAmount().should("have.text", sum);
     shoppingCartPage.buttonCheckOut();
 
-    //checkOutPage
     checkOutPage.inputName(dataCard.name);
     checkOutPage.inputLastName(dataCard.lastName);
     checkOutPage.inputCard(dataCard.cardNumber);
     checkOutPage.buttonPurchase();
     
-    //reciptPage -> espera dinamica
     reciptPage.verifyShowLoading().should("exist");
     reciptPage.verifyButtonThankYou().should("have.text", "Thank you");
     reciptPage.verifyNames(dataCard.name, dataCard.lastName);
-    shoppingCartPage.verifyProduct(productData.product2.name).should("have.text", productData.product2.name);
-    shoppingCartPage.verifyProduct(productData.product4.name).should("have.text", productData.product4.name);
+    reciptPage.verifyProduct(productData.product2.name).should("have.text", productData.product2.name);
+    reciptPage.verifyProduct(productData.product4.name).should("have.text", productData.product4.name);
     reciptPage.VerifyCardNumber().should("have.text", dataCard.cardNumber);
     reciptPage.verifyTotalAmount(sum);
   });
