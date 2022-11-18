@@ -16,9 +16,7 @@ export class ReciptPage {
   }
 
   verifyNames(nombre, apellido) {
-    cy.get(this.selectorNames)
-      .invoke("text")
-      .then(() => {
+    cy.get(this.selectorNames).invoke("text").then(() => {
         cy.contains(nombre + " " + apellido);
       });
   }
@@ -27,11 +25,12 @@ export class ReciptPage {
     return cy.get(this.cardNumber);
   }
 
+  verifyProduct(product) {
+    return cy.xpath(`//p[text()='${product}']`,{timeout: 10000});
+  }
+
   verifyTotalAmount(total) {
-    return cy
-      .get(this.totalPrice)
-      .invoke("text")
-      .then(() => {
+    return cy.get(this.totalPrice).invoke("text").then(() => {
         cy.contains(total);
       });
   }
