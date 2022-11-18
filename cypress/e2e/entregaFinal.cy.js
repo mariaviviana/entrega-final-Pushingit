@@ -96,8 +96,8 @@ describe("Desafio final PushingIt", () => {
     reciptPage.verifyShowLoading().should("exist");
     reciptPage.verifyButtonThankYou().should("have.text", "Thank you");
     reciptPage.verifyNames(dataCard.name, dataCard.lastName);
-    reciptPage.verifyProduct1().should("have.text", productData.product2.name);
-    reciptPage.verifyProduct2().should("have.text", productData.product4.name);
+    shoppingCartPage.verifyProduct(productData.product2.name).should("have.text", productData.product2.name);
+    shoppingCartPage.verifyProduct(productData.product4.name).should("have.text", productData.product4.name);
     reciptPage.VerifyCardNumber().should("have.text", dataCard.cardNumber);
     reciptPage.verifyTotalAmount(sum);
   });
