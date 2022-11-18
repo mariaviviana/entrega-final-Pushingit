@@ -6,7 +6,7 @@ export class ShoppingCartPage {
   }
 
   verifyProduct(product) {
-    return cy.get(`p[name='${product}']`);
+    return cy.xpath(`//p[text()='${product}']`,{timeout: 10000});
   }
 
   verifyPrice(product, price) {

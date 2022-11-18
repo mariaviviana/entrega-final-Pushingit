@@ -2,8 +2,6 @@ export class ReciptPage {
   constructor() {
     this.buttonThankYou = "//button[text()='Thank you']";
     this.selectorNames = "#name";
-    this.product1 = "//p[@id='White Pants']";
-    this.product2 = "//p[@id='Black Jacket']";
     this.cardNumber = "#creditCard";
     this.totalPrice = "#totalPrice";
     this.showLoading = "div[role='progressbar']";
@@ -23,14 +21,6 @@ export class ReciptPage {
       .then(() => {
         cy.contains(nombre + " " + apellido);
       });
-  }
-
-  verifyProduct1() {
-    return cy.xpath(this.product1);
-  }
-
-  verifyProduct2() {
-    return cy.xpath(this.product2);
   }
 
   VerifyCardNumber() {
